@@ -14,6 +14,7 @@ import { ProfileService } from "../../services/profile.service";
 import { AsyncPipe, NgIf } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FollowButtonComponent } from "../../components/follow-button.component";
+import { mockUser } from "./mock-profile";
 
 @Component({
   selector: "app-profile-page",
@@ -42,22 +43,39 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() { // You need to modify this for Task 3
-    this.profileService
-      .get(this.route.snapshot.params["username"])
-      .pipe(
-        // catchError((error) => {
-        //   void this.router.navigate(["/"]);
-        //   return throwError(() => error);
-        // }),
-        switchMap((profile) => {
-          return combineLatest([of(profile), this.userService.currentUser]);
-        }),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe(([profile, user]) => {
-        this.profile = profile;
-        this.isUser = profile.username === user?.username;
-      });
+    var url = this.router.url;
+    var id: number = 0;
+    for (let i = url.length - 1; i >= 0; i--) {
+      const element = url[i];
+      if (element === "/") {
+        id = i;
+        break;
+      }
+    }
+    if (url.includes("/profile/" + url.substring(id + 1))) {
+      this.isUser = true;
+      this.profile = mockUser;
+      this.profile.username = this.router.url;
+    }
+    
+
+    // Removed
+    // this.profileService
+    //   .get(this.route.snapshot.params["username"])
+    //   .pipe(
+    //     // catchError((error) => {
+    //     //   void this.router.navigate(["/"]);
+    //     //   return throwError(() => error);
+    //     // }),
+    //     switchMap((profile) => {
+    //       return combineLatest([of(profile), this.userService.currentUser]);
+    //     }),
+    //     takeUntilDestroyed(this.destroyRef),
+    //   )
+    //   .subscribe(([profile, user]) => {
+    //     this.profile = profile;
+    //     this.isUser = profile.username === user?.username;
+    //   });
   }
 
   onToggleFollowing(profile: Profile) {
