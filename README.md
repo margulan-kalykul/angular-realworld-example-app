@@ -1,5 +1,7 @@
 Angular Final Exam, Fall 2024
 
+#Margulan Kalykul 21B030686
+
 3 tasks, each task 33% of 20 points. ~6.6
 
 Important: There a lot of stuff going on in this project, but my tasks will only require you to modify things you actually know. 

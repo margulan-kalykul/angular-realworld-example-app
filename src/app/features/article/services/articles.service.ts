@@ -36,7 +36,7 @@ export class ArticlesService {
         author: {
           username: "Mock username 1",
           bio: "Mock bio 1",
-          image: "Mock image 1",
+          image: "https://ghavatars.staticblitz.com/margulan-kalykul.png",
           following: false
         }
       },
