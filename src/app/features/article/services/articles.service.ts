@@ -19,11 +19,42 @@ export class ArticlesService {
       // @ts-ignore
       params = params.set(key, config.filters[key]);
     });
+  
+    // Task 1 solution with mock data
 
-    return this.http.get<{ articles: Article[]; articlesCount: number }>(
-      "/articles" + (config.type === "feed" ? "/feed" : ""),
-      { params },
-    );
+    const mockArticles: Article[] = [
+      {
+        slug: "mock-article-1",
+        title: "Mock 1",
+        description: "Mock desc 1",
+        body: "Mock body 1",
+        tagList: ["Mock Tag 1", "Mock Tag 2"],
+        createdAt: "01-01-2000",
+        updatedAt: "02-02-2000",
+        favorited: false,
+        favoritesCount: 0,
+        author: {
+          username: "Mock username 1",
+          bio: "Mock bio 1",
+          image: "Mock image 1",
+          following: false
+        }
+      },
+    ];
+
+    const mockObservable = new Observable<{ articles: Article[]; articlesCount: number }>(observer => {
+      observer.next({ articles: mockArticles, articlesCount: 1 });
+
+      observer.complete();
+    });
+
+    return mockObservable;
+
+    // Removed previous version
+    // return this.http.get<{ articles: Article[]; articlesCount: number }>(
+    //   "/articles" + (config.type === "feed" ? "/feed" : ""),
+    //   { params },
+    // );
   }
 
   get(slug: string): Observable<Article> {
