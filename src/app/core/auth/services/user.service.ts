@@ -26,9 +26,24 @@ export class UserService {
     email: string;
     password: string;
   }): Observable<{ user: User }> {
-    return this.http
-      .post<{ user: User }>("/users/login", { user: credentials })
-      .pipe(tap(({ user }) => this.setAuth(user)));
+    var user: User = {
+      email: "Mock",
+      token: "Mock",
+      username: "Mock",
+      bio: "Mock",
+      image: "https://ghavatars.staticblitz.com/margulan-kalykul.png"
+    };
+
+    const mockObservable = new Observable<{ user: User }>(observer => {
+      observer.next({ user: user });
+
+      observer.complete();
+    });
+
+    return mockObservable;
+    // return this.http
+    //   .post<{ user: User }>("/users/login", { user: credentials })
+    //   .pipe(tap(({ user }) => this.setAuth(user)));
   }
 
   register(credentials: {
@@ -36,9 +51,25 @@ export class UserService {
     email: string;
     password: string;
   }): Observable<{ user: User }> {
-    return this.http
-      .post<{ user: User }>("/users", { user: credentials })
-      .pipe(tap(({ user }) => this.setAuth(user)));
+    // I added this just in case
+    var user: User = {
+      email: "Mock",
+      token: "Mock",
+      username: "Mock",
+      bio: "Mock",
+      image: "https://ghavatars.staticblitz.com/margulan-kalykul.png"
+    };
+
+    const mockObservable = new Observable<{ user: User }>(observer => {
+      observer.next({ user: user });
+
+      observer.complete();
+    });
+
+    return mockObservable;
+    // return this.http
+    //   .post<{ user: User }>("/users", { user: credentials })
+    //   .pipe(tap(({ user }) => this.setAuth(user)));
   }
 
   logout(): void {
